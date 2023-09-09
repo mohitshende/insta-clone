@@ -2,10 +2,10 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import HomeScreen from "./Screens/Home/HomeScreen";
-import SearchScreen from "./Screens/Search/SearchScreen";
-import ProfileScreen from "./Screens/Profile/ProfileScreen";
-import NotificationsScreen from "./Screens/Notifications/NotificationsScreen";
+import HomeScreen from "./screens/Home/HomeScreen";
+import SearchScreen from "./screens/Search/SearchScreen";
+import ProfileScreen from "./screens/Profile/ProfileScreen";
+import NotificationsScreen from "./screens/Notifications/NotificationsScreen";
 import Ionic from "react-native-vector-icons/Ionicons";
 
 const Stack = createStackNavigator();

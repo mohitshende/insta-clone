@@ -8,13 +8,20 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import IonicIcon from "react-native-vector-icons/Ionicons";
-import React from "react";
-import { PinchGestureHandler } from "react-native-gesture-handler";
+import AntDesignIcon from "react-native-vector-icons/AntDesign";
+import React, { useState } from "react";
+import {
+  Gesture,
+  GestureDetector,
+  PinchGestureHandler,
+} from "react-native-gesture-handler";
 import Animated, {
+  interpolate,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
+  withDelay,
+  withSpring,
 } from "react-native-reanimated";
 
 const { width: SIZE } = Dimensions.get("window");
@@ -79,14 +86,13 @@ const AnimatedImage = Animated.createAnimatedComponent(Image);
 const PostImage = ({ post }) => {
   const scale = useSharedValue(1);
 
-  const pinchHandler = useAnimatedGestureHandler({
-    onActive: (event) => {
+  const pinchHandler = Gesture.Pinch()
+    .onUpdate((event) => {
       scale.value = event.scale;
-    },
-    onEnd: () => {
-      scale.value = withTiming(1);
-    },
-  });
+    })
+    .onEnd(() => {
+      scale.value = withSpring(1, { damping: 50 });
+    });
 
   const rStyle = useAnimatedStyle(() => {
     return {
@@ -95,45 +101,97 @@ const PostImage = ({ post }) => {
     };
   });
 
+  const scaleHeart = useSharedValue(0);
+
+  const doubleTap = Gesture.Tap()
+    .numberOfTaps(2)
+    .maxDelay(250)
+    .onStart(() => {
+      scaleHeart.value = withSpring(1, undefined, (isFinished) => {
+        if (isFinished) {
+          scaleHeart.value = withDelay(100, withSpring(0));
+        }
+      });
+    });
+
+  const heartStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: Math.max(scaleHeart.value, 0) }],
+    };
+  });
+
+  const composedGestureHandlers = Gesture.Exclusive(doubleTap, pinchHandler);
+
   return (
-    <PinchGestureHandler onGestureEvent={pinchHandler}>
-      <AnimatedImage
-        source={{ uri: post.imgUrl }}
-        style={[
-          {
-            width: SIZE,
-            height: SIZE,
-            resizeMode: "cover",
-          },
-          rStyle,
-        ]}
-      />
-    </PinchGestureHandler>
+    <GestureDetector gesture={composedGestureHandlers}>
+      <View>
+        <AnimatedImage
+          source={{ uri: post.imgUrl }}
+          style={[
+            {
+              width: SIZE,
+              height: SIZE,
+              resizeMode: "cover",
+            },
+            rStyle,
+          ]}
+        />
+
+        <Animated.View
+          style={[
+            {
+              width: SIZE,
+              height: SIZE,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              position: "absolute",
+              zIndex: 1000,
+            },
+            heartStyle,
+          ]}
+        >
+          <AntDesignIcon name="heart" size={100} />
+        </Animated.View>
+      </View>
+    </GestureDetector>
   );
 };
 
-const PostFooter = ({ post }) => (
-  <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-    <View style={styles.leftFooterIcons}>
+const PostFooter = ({ post }) => {
+  const [isLiked, setIsLiked] = useState(false);
+
+  return (
+    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <View style={styles.leftFooterIcons}>
+        <TouchableOpacity onPress={() => setIsLiked(!isLiked)}>
+          {isLiked ? (
+            <AntDesignIcon
+              name="heart"
+              style={[styles.footerIcon, { color: "red" }]}
+              size={25}
+            />
+          ) : (
+            <Icon name="heart" style={styles.footerIcon} size={25} />
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <IonicIcon
+            name="md-chatbubble-outline"
+            style={styles.footerIcon}
+            size={25}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Icon name="send" style={styles.footerSendIcon} size={25} />
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity>
-        <Icon name="heart" style={styles.footerIcon} size={25} />
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <IonicIcon
-          name="md-chatbubble-outline"
-          style={styles.footerIcon}
-          size={25}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Icon name="send" style={styles.footerSendIcon} size={25} />
+        <Icon name="bookmark" style={styles.footerIcon} size={25} />
       </TouchableOpacity>
     </View>
-    <TouchableOpacity>
-      <Icon name="bookmark" style={styles.footerIcon} size={25} />
-    </TouchableOpacity>
-  </View>
-);
+  );
+};
 
 const Likes = ({ post }) => (
   <View style={{ flexDirection: "row", marginTop: 4 }}>

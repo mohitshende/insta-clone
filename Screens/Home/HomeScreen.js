@@ -3,7 +3,7 @@ import React from "react";
 import Header from "./components/Header";
 import Stories from "./components/Stories";
 import Post from "./components/Post";
-import { POSTS } from "../../Data/posts";
+import { POSTS } from "../../data/posts";
 
 const HomeScreen = ({ navigation }) => {
   return (

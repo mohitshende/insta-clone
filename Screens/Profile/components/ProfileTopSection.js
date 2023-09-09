@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { USERS } from "../../../Data/users";
+import { USERS } from "../../../data/users";
 import Icon from "react-native-vector-icons/Feather";
 
 const ProfileTopSection = () => {

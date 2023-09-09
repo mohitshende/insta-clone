@@ -9,6 +9,11 @@ import {
 import React from "react";
 import SearchBox from "./components/SearchBox";
 import SearchContent from "./components/SearchContent";
+import Animated, {
+  FadeInDown,
+  FadeOutDown,
+  SlideInUp,
+} from "react-native-reanimated";
 
 const SearchScreen = () => {
   const [image, setImage] = React.useState(null);
@@ -44,7 +49,9 @@ const SearchScreen = () => {
               backgroundColor: "rgba(52,52,52,0.8)",
             }}
           >
-            <View
+            <Animated.View
+              entering={FadeInDown}
+              exiting={FadeOutDown}
               style={{
                 position: "absolute",
                 top: windowHeight / 6,
@@ -81,7 +88,7 @@ const SearchScreen = () => {
                   height: "80%",
                 }}
               />
-            </View>
+            </Animated.View>
           </View>
         ) : null}
       </View>

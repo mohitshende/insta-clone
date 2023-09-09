@@ -1,6 +1,6 @@
 import { View, Image, ScrollView, StyleSheet, Text } from "react-native";
 import React from "react";
-import { USERS } from "../../../Data/users";
+import { USERS } from "../../../data/users";
 import { LinearGradient } from "expo-linear-gradient";
 
 const Stories = () => {

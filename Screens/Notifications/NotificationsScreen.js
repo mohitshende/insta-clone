@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
-import { FriendsProfileData } from "../../Data/notifications";
+import { FriendsProfileData } from "../../data/notifications";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 

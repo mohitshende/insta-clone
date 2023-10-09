@@ -15,7 +15,7 @@ export const POSTS = [
   },
   {
     imgUrl:
-      "https://unsplash.com/photos/WNsm9HIFfpA/download?ixid=MnwxMjA3fDB8MXx0b3BpY3x8eEh4WVRNSExnT2N8fHx8fDJ8fDE2NjgyNTIyMTA&force=true&w=640",
+      "https://unsplash.com/photos/AYPGMMtWVIY/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjk2NzczODE3fA&force=true&w=640",
     user: USERS[1].name,
     likes: 107,
     caption: "Building the true instagram",

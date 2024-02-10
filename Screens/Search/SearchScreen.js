@@ -5,15 +5,16 @@ import {
   Dimensions,
   View,
   Image,
+  TouchableOpacity,
+  Text,
 } from "react-native";
 import React from "react";
 import SearchBox from "./components/SearchBox";
 import SearchContent from "./components/SearchContent";
-import Animated, {
-  FadeInDown,
-  FadeOutDown,
-  SlideInUp,
-} from "react-native-reanimated";
+import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
+import Icon from "react-native-vector-icons/Feather";
+import IonicIcon from "react-native-vector-icons/Ionicons";
+import AntDesignIcon from "react-native-vector-icons/AntDesign";
 
 const SearchScreen = () => {
   const [image, setImage] = React.useState(null);
@@ -80,6 +81,11 @@ const SearchScreen = () => {
                     borderRadius: 100,
                   }}
                 />
+                <Text
+                  style={{ color: "white", marginLeft: 5, fontWeight: "700" }}
+                >
+                  Aron
+                </Text>
               </View>
               <Image
                 source={{ uri: image }}
@@ -88,6 +94,24 @@ const SearchScreen = () => {
                   height: "80%",
                 }}
               />
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginHorizontal: 15,
+                  marginTop: 10,
+                }}
+              >
+                <Icon name="heart" style={styles.footerIcon} size={25} />
+                <IonicIcon
+                  name="md-chatbubble-outline"
+                  style={styles.footerIcon}
+                  size={25}
+                />
+                <TouchableOpacity>
+                  <Icon name="send" style={styles.footerSendIcon} size={25} />
+                </TouchableOpacity>
+              </View>
             </Animated.View>
           </View>
         ) : null}
@@ -100,6 +124,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
     paddingTop: Platform.OS === "android" ? 25 : 0,
+  },
+  footerIcon: {
+    width: 33,
+    height: 33,
+  },
+  footerSendIcon: {
+    width: 33,
+    height: 33,
+    transform: [{ rotate: "20deg" }],
   },
 });
 export default SearchScreen;

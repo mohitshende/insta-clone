@@ -31,7 +31,16 @@ const NotificationsScreen = () => {
           {FriendsProfileData.slice(0, 3).map((data, index) => {
             return (
               <TouchableOpacity
-                onPress={() => navigation.push("FriendProfile")}
+                onPress={() =>
+                  navigation.push("FriendProfileScreen", {
+                    name: data.name,
+                    profileImage: data.profileImage,
+                    follow: data.follow,
+                    post: data.posts,
+                    followers: data.followers,
+                    folloing: data.folloing,
+                  })
+                }
                 key={index}
               >
                 <Text>{data.name},</Text>
@@ -61,6 +70,7 @@ const NotificationsScreen = () => {
                     alignItems: "center",
                     maxWidth: "64%",
                   }}
+                  onPress={() => navigation.push("FriendProfileScreen")}
                 >
                   <Image
                     source={{ uri: data.profileImage }}
@@ -124,6 +134,7 @@ const NotificationsScreen = () => {
                         alignItems: "center",
                         maxWidth: "74%",
                       }}
+                      onPress={() => navigation.push("FriendProfileScreen")}
                     >
                       <Image
                         source={{ uri: data.profileImage }}

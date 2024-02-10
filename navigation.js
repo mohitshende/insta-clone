@@ -7,6 +7,8 @@ import SearchScreen from "./screens/Search/SearchScreen";
 import ProfileScreen from "./screens/Profile/ProfileScreen";
 import NotificationsScreen from "./screens/Notifications/NotificationsScreen";
 import Ionic from "react-native-vector-icons/Ionicons";
+import StoriesScreen from "./screens/Stories/StoriesScreen";
+import FriendProfileScreen from "./screens/FriendProfile/FriendProfileScreen";
 
 const Stack = createStackNavigator();
 
@@ -55,7 +57,7 @@ const BottomTabScreen = () => {
 
 const screenOptions = {
   headerShown: false,
-  gestureEnabled: true,
+  // gestureEnabled: true,
 };
 
 const SignedInStack = () => {
@@ -66,6 +68,11 @@ const SignedInStack = () => {
         screenOptions={screenOptions}
       >
         <Stack.Screen name="Bottom" component={BottomTabScreen} />
+        <Stack.Screen name="StoriesScreen" component={StoriesScreen} />
+        <Stack.Screen
+          name="FriendProfileScreen"
+          component={FriendProfileScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

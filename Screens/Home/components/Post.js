@@ -10,19 +10,14 @@ import Icon from "react-native-vector-icons/Feather";
 import IonicIcon from "react-native-vector-icons/Ionicons";
 import AntDesignIcon from "react-native-vector-icons/AntDesign";
 import React, { useState } from "react";
-import {
-  Gesture,
-  GestureDetector,
-  PinchGestureHandler,
-} from "react-native-gesture-handler";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
-  interpolate,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withDelay,
   withSpring,
 } from "react-native-reanimated";
+import BottomSheet from "../../../components/BottomSheet";
 
 const { width: SIZE } = Dimensions.get("window");
 
@@ -48,38 +43,53 @@ const Post = ({ post }) => {
   );
 };
 
-const PostHeader = ({ post }) => (
-  <View
-    style={{
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      margin: 5,
-    }}
-  >
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-      }}
-    >
-      <Image source={{ uri: post.profile_picture }} style={styles.story} />
-      <Text style={{ color: "white", marginLeft: 5, fontWeight: "700" }}>
-        {post.user}
-      </Text>
-    </View>
-    <Text
-      style={{
-        color: "white",
-        fontSize: 20,
-        fontWeight: "700",
-        transform: [{ rotate: "90deg" }],
-      }}
-    >
-      ...
-    </Text>
-  </View>
-);
+const PostHeader = ({ post }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function closeBottomSheet() {
+    setIsOpen(false);
+  }
+
+  return (
+    <>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          margin: 5,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Image source={{ uri: post.profile_picture }} style={styles.story} />
+          <Text style={{ color: "white", marginLeft: 5, fontWeight: "700" }}>
+            {post.user}
+          </Text>
+        </View>
+        <TouchableOpacity onPress={() => setIsOpen(true)}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 20,
+              fontWeight: "700",
+              transform: [{ rotate: "90deg" }],
+            }}
+          >
+            ...
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <BottomSheet isOpen={isOpen} onClose={closeBottomSheet}>
+        <Text>loremdcsdvcsdjhbvksdnv</Text>
+      </BottomSheet>
+    </>
+  );
+};
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 
@@ -97,7 +107,7 @@ const PostImage = ({ post }) => {
   const rStyle = useAnimatedStyle(() => {
     return {
       transform: [{ scale: scale.value }],
-      zIndex: 999,
+      zIndex: 99,
     };
   });
 
@@ -146,7 +156,7 @@ const PostImage = ({ post }) => {
               justifyContent: "center",
               alignItems: "center",
               position: "absolute",
-              zIndex: 1000,
+              zIndex: 100,
             },
             heartStyle,
           ]}
